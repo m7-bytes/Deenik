@@ -11,7 +11,17 @@ header {
   padding: 2rem 1rem;
   background: linear-gradient(to right, #f9d976, #f39f86);
   color: #4b2e83;
-  position: relative;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.logo {
+  width: 40px;
+  height: 40px;
 }
 
 header h1 {
@@ -23,7 +33,7 @@ header h1 {
   display: block;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #000; /* CONTRASTING COLOR for visibility */
+  color: #000; /* CONTRASTING COLOR */
   margin-top: 0.3rem;
 }
 
@@ -55,6 +65,53 @@ section h2 {
   text-align: center;
 }
 
+/* Prayer timings 3D */
+.timings-3d p {
+  font-size: 1.2rem;
+  margin: 0.3rem 0;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  transform: perspective(500px) rotateX(0deg);
+}
+.timings-3d p.next-prayer {
+  font-weight: bold;
+  color: #d95c5c;
+  background-color: rgba(249, 217, 118, 0.3);
+  transform: perspective(500px) rotateX(10deg);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Daily prayer tracker */
+#daily-prayers {
+  background: #fff8e1;
+  padding: 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+}
+#prayerTracker label {
+  display: inline-block;
+  margin: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+#prayerTracker input[type="checkbox"] {
+  margin-right: 0.3rem;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* Zakat centered */
+#zakat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.zakat-inputs {
+  width: 100%;
+  max-width: 400px;
+}
+
 button {
   background-color: #f39f86;
   color: white;
@@ -83,15 +140,4 @@ footer {
   padding: 1rem;
   background-color: #f9d976;
   margin-top: 2rem;
-}
-
-.tasbih-controls {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 0.5rem;
-}
-
-.zakat-inputs label {
-  font-weight: bold;
 }
