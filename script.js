@@ -1,4 +1,4 @@
-// Tasbih Counter
+// ====================== TASBIH ======================
 let count = 0;
 const tasbihCount = document.getElementById('tasbihCount');
 document.getElementById('tasbihBtn').addEventListener('click', () => {
@@ -10,19 +10,20 @@ document.getElementById('resetTasbih').addEventListener('click', () => {
     tasbihCount.textContent = count;
 });
 
-// Zakat Calculator (2.5%)
+// ====================== ZAKAT ======================
 document.getElementById('calcZakat').addEventListener('click', () => {
-    const amount = parseFloat(document.getElementById('zakatAmount').value);
-    const zakat = amount * 0.025 || 0;
+    const cash = parseFloat(document.getElementById('cash').value) || 0;
+    const gold = parseFloat(document.getElementById('gold').value) || 0;
+    const silver = parseFloat(document.getElementById('silver').value) || 0;
+    const goldRate = parseFloat(document.getElementById('goldRate').value) || 0;
+    const silverRate = parseFloat(document.getElementById('silverRate').value) || 0;
+
+    const totalWealth = cash + (gold * goldRate) + (silver * silverRate);
+    const zakat = totalWealth * 0.025;
     document.getElementById('zakatResult').textContent = zakat.toFixed(2);
 });
 
-// Hijri Calendar using Intl API
-const hijriDateEl = document.getElementById('hijriDate');
-const hijriDate = new Intl.DateTimeFormat('en-TN-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
-hijriDateEl.textContent = hijriDate;
-
-// Namaz Timings & Next Prayer (using API)
+// ====================== NAMAZ TIMINGS ======================
 async function getNamazTimings() {
     try {
         const { data } = await axios.get('https://api.aladhan.com/v1/timingsByCity', {
@@ -30,21 +31,30 @@ async function getNamazTimings() {
         });
 
         const timings = data.data.timings;
+        const filteredTimings = {
+            Fajr: timings.Fajr,
+            Dhuhr: timings.Dhuhr,
+            Asr: timings.Asr,
+            Maghrib: timings.Maghrib,
+            Isha: timings.Isha,
+            Sunrise: timings.Sunrise
+        };
+
         const timingsEl = document.getElementById('timings');
-        timingsEl.innerHTML = Object.entries(timings)
+        timingsEl.innerHTML = Object.entries(filteredTimings)
             .map(([name, time]) => `<p>${name}: ${time}</p>`)
             .join('');
 
-        // Next prayer countdown
+        // Next Prayer Countdown
         const now = new Date();
-        const nextPrayer = Object.entries(timings).map(([name, time]) => {
+        const nextPrayer = Object.entries(filteredTimings).map(([name, time]) => {
             const [hour, minute] = time.split(':').map(Number);
             const prayerTime = new Date();
             prayerTime.setHours(hour, minute, 0, 0);
             if (prayerTime > now) return { name, prayerTime };
         }).filter(Boolean)[0];
 
-        if(nextPrayer){
+        if (nextPrayer) {
             const timerEl = document.getElementById('next-prayer-timer');
             function updateTimer() {
                 const diff = nextPrayer.prayerTime - new Date();
@@ -63,39 +73,49 @@ async function getNamazTimings() {
 }
 getNamazTimings();
 
-// Qibla Compass
-function drawCompass(angle) {
-    const canvas = document.getElementById('qiblaCanvas');
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+// ====================== QIBLA COMPASS ======================
+const canvas = document.getElementById('qiblaCanvas');
+const ctx = canvas.getContext('2d');
 
+function drawCompass(angle) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Outer circle
     ctx.beginPath();
-    ctx.arc(100, 100, 90, 0, 2*Math.PI);
+    ctx.arc(125, 125, 100, 0, 2*Math.PI);
+    ctx.strokeStyle = '#f39f86';
+    ctx.lineWidth = 4;
     ctx.stroke();
 
     // Arrow
     ctx.save();
-    ctx.translate(100, 100);
-    ctx.rotate((angle-90)*Math.PI/180); // rotate arrow
+    ctx.translate(125, 125);
+    ctx.rotate(angle * Math.PI / 180);
     ctx.beginPath();
-    ctx.moveTo(0, -70);
-    ctx.lineTo(-10, -50);
-    ctx.lineTo(10, -50);
+    ctx.moveTo(0, -80);
+    ctx.lineTo(-12, -60);
+    ctx.lineTo(12, -60);
     ctx.closePath();
-    ctx.fillStyle = '#d95c5c';
+    ctx.fillStyle = '#f39f86';
     ctx.fill();
     ctx.restore();
 }
 
-// Get Qibla direction using geolocation
-navigator.geolocation.getCurrentPosition(position => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    const kaabaLat = 21.4225;
-    const kaabaLon = 39.8262;
-    const angle = Math.atan2(
-        Math.sin(kaabaLon-lon)*Math.cos(kaabaLat),
-        Math.cos(lat)*Math.sin(kaabaLat) - Math.sin(lat)*Math.cos(kaabaLat)*Math.cos(kaabaLon-lon)
-    ) * (180/Math.PI);
-    drawCompass(angle);
-});
+// Device Orientation for smooth rotation
+if(window.DeviceOrientationEvent){
+    window.addEventListener('deviceorientation', (event) => {
+        const alpha = event.alpha; // rotation around z-axis
+        const kaabaLat = 21.4225;
+        const kaabaLon = 39.8262;
+
+        navigator.geolocation.getCurrentPosition(pos => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            const angleToKaaba = Math.atan2(
+                Math.sin(kaabaLon-lon)*Math.cos(kaabaLat),
+                Math.cos(lat)*Math.sin(kaabaLat) - Math.sin(lat)*Math.cos(kaabaLat)*Math.cos(kaabaLon-lon)
+            ) * (180/Math.PI);
+            const rotation = angleToKaaba - alpha;
+            drawCompass(rotation);
+        });
+    }, true);
+}
