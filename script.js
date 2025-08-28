@@ -33,16 +33,16 @@ async function getNamazTimings() {
         const timings = data.data.timings;
         const filteredTimings = {
             Fajr: timings.Fajr,
+            Sunrise: timings.Sunrise,
             Dhuhr: timings.Dhuhr,
             Asr: timings.Asr,
             Maghrib: timings.Maghrib,
-            Isha: timings.Isha,
-            Sunrise: timings.Sunrise
+            Isha: timings.Isha
         };
 
         const timingsEl = document.getElementById('timings');
         timingsEl.innerHTML = Object.entries(filteredTimings)
-            .map(([name, time]) => `<p>${name}: ${time}</p>`)
+            .map(([name, time]) => `<p><strong>${name}</strong>: ${time}</p>`)
             .join('');
 
         // Next Prayer Countdown
@@ -54,7 +54,7 @@ async function getNamazTimings() {
             if (prayerTime > now) return { name, prayerTime };
         }).filter(Boolean)[0];
 
-        if (nextPrayer) {
+        if(nextPrayer){
             const timerEl = document.getElementById('next-prayer-timer');
             function updateTimer() {
                 const diff = nextPrayer.prayerTime - new Date();
