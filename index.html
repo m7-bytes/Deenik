@@ -16,6 +16,7 @@
     </div>
     <span class="tagline">Your Deen, Your Way</span>
     <p>Deenik is your personal guide to daily prayers, devotion, and Islamic calculations.</p>
+    <button id="toggleMode">Toggle Dark/Light Mode</button>
   </header>
 
   <main>
@@ -41,9 +42,9 @@
 
     <!-- QIBLA COMPASS -->
     <section id="qibla">
-      <h2>Qibla Direction</h2>
+      <h2>Qibla Compass</h2>
       <div id="qibla-compass">
-        <canvas id="qiblaCanvas" width="250" height="250"></canvas>
+        <canvas id="qiblaCanvas" width="300" height="300"></canvas>
       </div>
     </section>
 
@@ -85,6 +86,12 @@
     <section id="hijri">
       <h2>Hijri Calendar</h2>
       <p id="hijriDate"></p>
+    </section>
+
+    <!-- QUOTE OF THE DAY -->
+    <section id="quote">
+      <h2>Quote of the Day</h2>
+      <p id="quoteText">Loading...</p>
     </section>
 
   </main>
