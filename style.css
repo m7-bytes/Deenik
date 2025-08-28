@@ -1,80 +1,96 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #fdf6f0;
-    color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #fefcfb, #fff7e8);
+  color: #333;
 }
 
 header {
-    text-align: center;
-    padding: 2rem 1rem;
-    background-color: #ffe6e0;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(to right, #f9d976, #f39f86);
+  color: #4b2e83;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-}
-
-header p {
-    font-size: 1rem;
-    color: #555;
+  margin: 0;
+  font-size: 3rem;
 }
 
 .tagline {
-    display: block;
-    margin-top: 0.5rem;
-    font-weight: bold;
-    color: #d95c5c;
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffd700; /* Gold */
+  margin-top: 0.3rem;
+}
+
+header p {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #5b3c88;
 }
 
 main {
-    padding: 2rem 1rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
 section {
-    background: #fff;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
 section h2 {
-    margin-top: 0;
-    color: #d95c5c;
+  margin-top: 0;
+  color: #f39f86;
+  text-align: center;
 }
 
 button {
-    background-color: #d95c5c;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 0.5rem;
+  background-color: #f39f86;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #c14f4f;
+  background-color: #e07b63;
 }
 
 input {
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    width: 100%;
-    margin-top: 0.3rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin: 0.3rem 0 1rem 0;
 }
 
 footer {
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-    background-color: #ffe6e0;
+  text-align: center;
+  padding: 1rem;
+  background-color: #f9d976;
+  margin-top: 2rem;
+}
+
+.tasbih-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.zakat-inputs label {
+  font-weight: bold;
 }
