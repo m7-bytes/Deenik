@@ -10,15 +10,12 @@ toggleBtn.addEventListener('click',()=>{
 // Tasbih Counter
 let count=0;
 const tasbihCount=document.getElementById('tasbihCount');
+function formatCount(n){return n.toString().padStart(4,'0');}
 document.getElementById('tasbihBtn').addEventListener('click',()=>{
-    count++;
-    tasbihCount.textContent=count;
-    tasbihCount.style.transform='scale(1.2)';
-    setTimeout(()=>tasbihCount.style.transform='scale(1)',150);
+    count++; tasbihCount.textContent=formatCount(count);
 });
 document.getElementById('resetTasbih').addEventListener('click',()=>{
-    count=0;
-    tasbihCount.textContent=count;
+    count=0; tasbihCount.textContent=formatCount(count);
 });
 
 // Zakat Calculator
@@ -58,13 +55,13 @@ function updatePrayerCount(){
 checkboxes.forEach(cb=>cb.addEventListener('change',updatePrayerCount));
 updatePrayerCount();
 
-// Prayer Dua / Guidance
+// Prayer Duas
 const prayerDuas = {
-    Fajr: "Dua for Fajr: Allahumma inni as’aluka khayra hadhal-yawmi...",
-    Dhuhr: "Dua for Dhuhr: Allahumma inni a’udhu bika min hammi wal hazan...",
-    Asr: "Dua for Asr: Allahumma inni a’udhu bika min al-kasali wal haram...",
-    Maghrib: "Dua for Maghrib: Subhanaka Allahumma wa bihamdika...",
-    Isha: "Dua for Isha: Allahumma inni as’aluka min khayri ma sa’alaka minhu..."
+    Fajr: "اللَّهُمَّ اجعلنا من الفائزين بصلاتنا وتقبلها منا. / O Allah, make us among those who attain success through our prayers and accept them from us.",
+    Dhuhr: "اللَّهُمَّ اجعلنا من الشاكرين لنعمك وواهبينا الهداية. / O Allah, make us among those who are grateful for Your blessings and grant us guidance.",
+    Asr: "اللَّهُمَّ اجعلنا من المتقين واغفر لنا ذنوبنا. / O Allah, make us among the pious and forgive our sins.",
+    Maghrib: "سبحانك اللهم وبحمدك / Glory be to You, O Allah, and praise.",
+    Isha: "اللَّهُمَّ اجعلنا من الذاكرين لك دائمًا. / O Allah, make us always among those who remember You."
 };
 const duaText=document.getElementById('duaText');
 checkboxes.forEach(cb=>{
@@ -76,20 +73,20 @@ checkboxes.forEach(cb=>{
 // Quote of the Day
 const quoteText=document.getElementById('quoteText');
 const quotes=[
-    "Remember Allah in your heart, and you will find peace.",
-    "Prayer is the key to Paradise.",
-    "Allah does not burden a soul beyond that it can bear.",
-    "Good deeds erase bad deeds."
+  { ur:"اللہ کو یاد رکھو، تمہیں سکون ملے گا۔", en:"Remember Allah in your heart, and you will find peace." },
+  { ur:"نماز جنت کی چابی ہے۔", en:"Prayer is the key to Paradise." },
+  { ur:"اللہ کسی روح پر اس کی طاقت سے زیادہ بوجھ نہیں ڈالتا۔", en:"Allah does not burden a soul beyond that it can bear." },
+  { ur:"نیک اعمال برے اعمال کو مٹا دیتے ہیں۔", en:"Good deeds erase bad deeds." }
 ];
 function updateQuote(){
-    const quote=quotes[Math.floor(Math.random()*quotes.length)];
+    const q = quotes[Math.floor(Math.random()*quotes.length)];
     quoteText.style.opacity=0;
-    setTimeout(()=>{quoteText.textContent=quote; quoteText.style.opacity=1;},300);
+    setTimeout(()=>{quoteText.innerHTML=`${q.ur}<br><em>${q.en}</em>`; quoteText.style.opacity=1;},300);
 }
 updateQuote();
-setInterval(updateQuote,86400000); // change daily
+setInterval(updateQuote,86400000);
 
-// Prayer Timings using API
+// Prayer Timings
 function updatePrayerTimes(){
     if(!navigator.geolocation){console.log("Geolocation not supported");return;}
     navigator.geolocation.getCurrentPosition(pos=>{
@@ -122,17 +119,16 @@ setInterval(updatePrayerTimes,60000);
 // Qibla Compass
 const canvas=document.getElementById('qiblaCanvas');
 const ctx=canvas.getContext('2d');
-let angle=0;
 function drawCompass(a){
     ctx.clearRect(0,0,300,300);
     ctx.beginPath(); ctx.arc(150,150,100,0,2*Math.PI); ctx.strokeStyle="#f39f86"; ctx.lineWidth=5; ctx.stroke();
-    ctx.save(); ctx.translate(150,150); ctx.rotate(a); ctx.beginPath();
-    ctx.moveTo(0,-90); ctx.lineTo(0,0); ctx.strokeStyle="#FFD700"; ctx.lineWidth=6; ctx.stroke();
+    ctx.save(); ctx.translate(150,150); ctx.rotate(a);
+    ctx.beginPath(); ctx.moveTo(0,-90); ctx.lineTo(0,0); ctx.strokeStyle="#FFD700"; ctx.lineWidth=6; ctx.stroke();
     ctx.restore();
 }
 if(window.DeviceOrientationEvent){
     window.addEventListener('deviceorientation',e=>{
-        angle=((e.alpha||0)*Math.PI/180);
+        const angle=((e.alpha||0)*Math.PI/180);
         drawCompass(angle);
     });
 }else{drawCompass(0);}
