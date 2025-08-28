@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deenik - Your Deen, Your Way</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Deenik</h1>
+        <p>Deenik means a simple way to follow your faith. Your personal guide to worship and devotion.</p>
+        <span class="tagline">Your Deen, Your Way</span>
+    </header>
+
+    <main>
+        <!-- Namaz Timings -->
+        <section id="namaz-timings">
+            <h2>Today's Prayer Timings</h2>
+            <div id="timings"></div>
+            <div id="next-prayer-timer"></div>
+        </section>
+
+        <!-- Qibla Direction -->
+        <section id="qibla">
+            <h2>Qibla Direction</h2>
+            <div id="qibla-compass">
+                <canvas id="qiblaCanvas" width="200" height="200"></canvas>
+            </div>
+        </section>
+
+        <!-- Tasbih Counter -->
+        <section id="tasbih">
+            <h2>Tasbih Counter</h2>
+            <button id="tasbihBtn">Count</button>
+            <p>Count: <span id="tasbihCount">0</span></p>
+            <button id="resetTasbih">Reset</button>
+        </section>
+
+        <!-- Zakat Calculator -->
+        <section id="zakat">
+            <h2>Zakat Calculator</h2>
+            <label for="zakatAmount">Total Wealth (₹):</label>
+            <input type="number" id="zakatAmount" placeholder="Enter amount">
+            <button id="calcZakat">Calculate Zakat</button>
+            <p>Zakat Payable: ₹<span id="zakatResult">0</span></p>
+        </section>
+
+        <!-- Hijri Calendar -->
+        <section id="hijri">
+            <h2>Hijri Calendar</h2>
+            <p id="hijriDate"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Deenik</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
