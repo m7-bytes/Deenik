@@ -8,21 +8,38 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
 </head>
 <body>
+  <!-- HEADER -->
   <header>
-    <h1>Deenik</h1>
+    <div class="logo-title">
+      <img src="logo.png" alt="Deenik Logo" class="logo">
+      <h1>Deenik</h1>
+    </div>
     <span class="tagline">Your Deen, Your Way</span>
     <p>Deenik is your personal guide to daily prayers, devotion, and Islamic calculations.</p>
   </header>
 
   <main>
-    <!-- Prayer Timings -->
+    <!-- PRAYER TIMINGS -->
     <section id="namaz-timings">
       <h2>Today's Prayer Timings</h2>
-      <div id="timings"></div>
+      <div id="timings" class="timings-3d"></div>
       <div id="next-prayer-timer"></div>
     </section>
 
-    <!-- Qibla Direction -->
+    <!-- DAILY PRAYER TRACKER -->
+    <section id="daily-prayers">
+      <h2>Daily Prayer Tracker</h2>
+      <form id="prayerTracker">
+        <label><input type="checkbox" id="FajrCheck"> Fajr</label>
+        <label><input type="checkbox" id="DhuhrCheck"> Dhuhr</label>
+        <label><input type="checkbox" id="AsrCheck"> Asr</label>
+        <label><input type="checkbox" id="MaghribCheck"> Maghrib</label>
+        <label><input type="checkbox" id="IshaCheck"> Isha</label>
+      </form>
+      <p>Prayers completed: <span id="prayersCompleted">0</span>/5</p>
+    </section>
+
+    <!-- QIBLA COMPASS -->
     <section id="qibla">
       <h2>Qibla Direction</h2>
       <div id="qibla-compass">
@@ -30,7 +47,7 @@
       </div>
     </section>
 
-    <!-- Tasbih Counter -->
+    <!-- TASBIH COUNTER -->
     <section id="tasbih">
       <h2>Tasbih Counter</h2>
       <div class="tasbih-controls">
@@ -40,7 +57,7 @@
       <p>Count: <span id="tasbihCount">0</span></p>
     </section>
 
-    <!-- Zakat Calculator -->
+    <!-- ZAKAT CALCULATOR -->
     <section id="zakat">
       <h2>Zakat Calculator</h2>
       <div class="zakat-inputs">
@@ -63,6 +80,13 @@
       </div>
       <p>Zakat Payable: ₹<span id="zakatResult">0</span></p>
     </section>
+
+    <!-- HIJRI CALENDAR -->
+    <section id="hijri">
+      <h2>Hijri Calendar</h2>
+      <p id="hijriDate"></p>
+    </section>
+
   </main>
 
   <footer>
