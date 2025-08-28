@@ -1,77 +1,40 @@
 /* General Styles */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0; padding: 0;
-  background: linear-gradient(135deg,#fefcfb,#fff7e8);
-  color: #333;
-  transition: all 0.3s ease;
-}
-
-body.dark-mode {
-  background:#111;
-  color:#fff;
-}
+body {font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background:linear-gradient(135deg,#fefcfb,#fff7e8); color:#333; transition:all 0.3s ease;}
+body.dark-mode {background:#111; color:#fff;}
 
 /* Header */
-header {
-  text-align:center; 
-  padding:2rem; 
-  background: linear-gradient(to right,#f9d976,#f39f86); 
-  color:#4b2e83;
-  transition: 0.3s;
-}
-header.dark-mode {
-  background:#222; 
-  color:#ffd700;
-}
-header h1{margin:0;font-size:3rem;}
+header {text-align:center; padding:2rem; background:linear-gradient(to right,#f9d976,#f39f86); color:#4b2e83; transition:0.3s;}
+header.dark-mode {background:#222; color:#ffd700;}
+header h1{margin:0; font-size:3rem;}
 .logo-title {display:flex; align-items:center; justify-content:center; gap:0.5rem;}
-.logo {width:40px;height:40px;}
+.logo {width:40px; height:40px;}
 .tagline{display:block;font-size:1.2rem;font-weight:bold;margin-top:0.3rem;}
 header p{color:#5b3c88;}
 header.dark-mode p{color:#ccc;}
-#toggleMode{
-  margin-top:10px;
-  padding:0.5rem 1rem;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  background:#f39f86;color:#fff;
-}
+#toggleMode{margin-top:10px; padding:0.5rem 1rem; border:none; border-radius:10px; cursor:pointer; background:#f39f86; color:#fff;}
 #toggleMode:hover{background:#e07b63;}
 
 /* Main & Cards */
 main{padding:2rem; max-width:900px;margin:0 auto; display:grid; gap:2rem;}
-.card {
-  background:#fff; padding:2rem; border-radius:15px;
-  box-shadow:0 6px 15px rgba(0,0,0,0.1); transition:0.3s;
-}
+.card {background:#fff; padding:2rem; border-radius:15px; box-shadow:0 6px 15px rgba(0,0,0,0.1); transition:0.3s; display:flex; flex-direction:column; align-items:center;}
 .card:hover{transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.15);}
 .card.dark-mode{background:#2a2a2a;}
 .card h2{color:#f39f86;text-align:center;}
 .card.dark-mode h2{color:#ffd700;}
 
 /* Prayer Timings 3D Widget */
-.timings-3d p {
-  font-size:1.2rem; margin:0.3rem 0; padding:0.5rem; border-radius:10px;
-  transform:perspective(500px) rotateX(0deg); transition:0.3s;
-}
-.timings-3d p.next-prayer {
-  font-weight:bold;
-  color:#d95c5c;
-  background:rgba(249,217,118,0.3);
-  transform:perspective(500px) rotateX(10deg); 
-  box-shadow:0 4px 15px rgba(0,0,0,0.2);
-}
+.timings-3d p {font-size:1.2rem; margin:0.3rem 0; padding:0.5rem; border-radius:10px;}
+.timings-3d p.next-prayer {font-weight:bold; color:#d95c5c; background:rgba(249,217,118,0.3); box-shadow:0 4px 15px rgba(0,0,0,0.2);}
 
 /* Prayer Tracker */
+#daily-prayers {display:flex; flex-direction:column; align-items:center; text-align:center;}
+#prayerTracker {display:flex; justify-content:center; flex-wrap:wrap; gap:1rem;}
+#prayerTracker label {display:flex; align-items:center; gap:0.5rem; cursor:pointer;}
 .progress-ring {position:relative;width:120px;height:120px;margin:0 auto 1rem;}
 .progress-ring svg{transform:rotate(-90deg);}
 .ring-bg{stroke:#f3f3f3;}
 .ring{stroke-dasharray:314;stroke-dashoffset:314;transition:0.5s linear;stroke-linecap:round;}
-.progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:bold;font-size:1.2rem;}
-#prayerTracker label{display:inline-block;margin:0.5rem 1rem;cursor:pointer;}
-#prayerTracker input[type="checkbox"]{transform:scale(1.2); margin-right:0.3rem; cursor:pointer;}
+.progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%); font-weight:bold; font-size:1.2rem;}
 
 /* Buttons and Inputs */
 button{background:#f39f86;color:#fff;border:none;padding:0.7rem 1.5rem;border-radius:10px;cursor:pointer;transition:0.3s;}
@@ -79,6 +42,7 @@ button:hover{background:#e07b63;}
 input{padding:0.5rem;border-radius:8px;border:1px solid #ccc;width:100%; margin:0.3rem 0 1rem 0;}
 
 /* Tasbih Counter */
+#tasbihCount {font-family:'Digital-7', monospace; font-size:3rem; color:#00ff00; background:#000; padding:0.5rem 1rem; border-radius:10px; letter-spacing:5px; text-align:center;}
 .tasbih-controls{display:flex; gap:1rem; justify-content:center; margin-bottom:1rem;}
 
 /* Footer */
