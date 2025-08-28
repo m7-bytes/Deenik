@@ -1,102 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deenik - Your Deen, Your Way</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deenik - Your Deen, Your Way</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
-    <div class="logo-title">
-      <img src="logo.png" alt="Deenik Logo" class="logo">
-      <h1>Deenik</h1>
+<header>
+  <div class="logo-title">
+    <img src="logo.png" alt="Deenik Logo" class="logo">
+    <h1>Deenik</h1>
+  </div>
+  <span class="tagline">Your Deen, Your Way</span>
+  <p>Deenik is your personal guide to daily prayers, devotion, and Islamic calculations.</p>
+  <button id="toggleMode">Toggle Dark/Light Mode</button>
+</header>
+
+<main>
+  <!-- Prayer Timings -->
+  <section class="card" id="namaz-timings">
+    <h2>Today's Prayer Timings</h2>
+    <div id="timings" class="timings-3d"></div>
+    <div id="next-prayer-timer"></div>
+  </section>
+
+  <!-- Daily Prayer Tracker -->
+  <section class="card" id="daily-prayers">
+    <h2>Daily Prayer Tracker</h2>
+    <div class="progress-ring">
+      <svg width="120" height="120">
+        <circle class="ring-bg" stroke="#f3f3f3" stroke-width="10" fill="transparent" r="50" cx="60" cy="60"/>
+        <circle class="ring" stroke="#f39f86" stroke-width="10" fill="transparent" r="50" cx="60" cy="60"/>
+      </svg>
+      <div class="progress-text"><span id="prayersCompleted">0</span>/5</div>
     </div>
-    <span class="tagline">Your Deen, Your Way</span>
-    <p>Deenik is your personal guide to daily prayers, devotion, and Islamic calculations.</p>
-    <button id="toggleMode">Toggle Dark/Light Mode</button>
-  </header>
+    <form id="prayerTracker">
+      <label><input type="checkbox" id="FajrCheck"> Fajr</label>
+      <label><input type="checkbox" id="DhuhrCheck"> Dhuhr</label>
+      <label><input type="checkbox" id="AsrCheck"> Asr</label>
+      <label><input type="checkbox" id="MaghribCheck"> Maghrib</label>
+      <label><input type="checkbox" id="IshaCheck"> Isha</label>
+    </form>
+  </section>
 
-  <main>
-    <!-- PRAYER TIMINGS -->
-    <section id="namaz-timings">
-      <h2>Today's Prayer Timings</h2>
-      <div id="timings" class="timings-3d"></div>
-      <div id="next-prayer-timer"></div>
-    </section>
+  <!-- Qibla Compass -->
+  <section class="card" id="qibla">
+    <h2>Qibla Compass</h2>
+    <canvas id="qiblaCanvas" width="300" height="300"></canvas>
+  </section>
 
-    <!-- DAILY PRAYER TRACKER -->
-    <section id="daily-prayers">
-      <h2>Daily Prayer Tracker</h2>
-      <form id="prayerTracker">
-        <label><input type="checkbox" id="FajrCheck"> Fajr</label>
-        <label><input type="checkbox" id="DhuhrCheck"> Dhuhr</label>
-        <label><input type="checkbox" id="AsrCheck"> Asr</label>
-        <label><input type="checkbox" id="MaghribCheck"> Maghrib</label>
-        <label><input type="checkbox" id="IshaCheck"> Isha</label>
-      </form>
-      <p>Prayers completed: <span id="prayersCompleted">0</span>/5</p>
-    </section>
+  <!-- Tasbih Counter -->
+  <section class="card" id="tasbih">
+    <h2>Tasbih Counter</h2>
+    <div class="tasbih-controls">
+      <button id="tasbihBtn">Count</button>
+      <button id="resetTasbih">Reset</button>
+    </div>
+    <p>Count: <span id="tasbihCount">0</span></p>
+  </section>
 
-    <!-- QIBLA COMPASS -->
-    <section id="qibla">
-      <h2>Qibla Compass</h2>
-      <canvas id="qiblaCanvas" width="300" height="300"></canvas>
-    </section>
+  <!-- Zakat Calculator -->
+  <section class="card" id="zakat">
+    <h2>Zakat Calculator</h2>
+    <div class="zakat-inputs">
+      <label>Cash (₹):<input type="number" id="cash"></label>
+      <label>Gold (grams):<input type="number" id="gold"></label>
+      <label>Silver (grams):<input type="number" id="silver"></label>
+      <label>Gold rate (₹/g):<input type="number" id="goldRate"></label>
+      <label>Silver rate (₹/g):<input type="number" id="silverRate"></label>
+      <button id="calcZakat">Calculate Zakat</button>
+    </div>
+    <p>Zakat Payable: ₹<span id="zakatResult">0</span></p>
+  </section>
 
-    <!-- TASBIH COUNTER -->
-    <section id="tasbih">
-      <h2>Tasbih Counter</h2>
-      <div class="tasbih-controls">
-        <button id="tasbihBtn">Count</button>
-        <button id="resetTasbih">Reset</button>
-      </div>
-      <p>Count: <span id="tasbihCount">0</span></p>
-    </section>
+  <!-- Hijri Calendar -->
+  <section class="card" id="hijri">
+    <h2>Hijri Calendar</h2>
+    <p id="hijriDate"></p>
+  </section>
 
-    <!-- ZAKAT CALCULATOR -->
-    <section id="zakat">
-      <h2>Zakat Calculator</h2>
-      <div class="zakat-inputs">
-        <label for="cash">Cash (₹):</label>
-        <input type="number" id="cash" placeholder="Enter cash">
+  <!-- Quote of the Day -->
+  <section class="card" id="quote">
+    <h2>Quote of the Day</h2>
+    <p id="quoteText">Loading...</p>
+  </section>
+</main>
 
-        <label for="gold">Gold (grams):</label>
-        <input type="number" id="gold" placeholder="Enter gold in grams">
+<footer>
+  <p>&copy; 2025 Deenik</p>
+</footer>
 
-        <label for="silver">Silver (grams):</label>
-        <input type="number" id="silver" placeholder="Enter silver in grams">
-
-        <label for="goldRate">Gold rate (₹/gram):</label>
-        <input type="number" id="goldRate" placeholder="Current gold rate">
-
-        <label for="silverRate">Silver rate (₹/gram):</label>
-        <input type="number" id="silverRate" placeholder="Current silver rate">
-
-        <button id="calcZakat">Calculate Zakat</button>
-      </div>
-      <p>Zakat Payable: ₹<span id="zakatResult">0</span></p>
-    </section>
-
-    <!-- HIJRI CALENDAR -->
-    <section id="hijri">
-      <h2>Hijri Calendar</h2>
-      <p id="hijriDate"></p>
-    </section>
-
-    <!-- QUOTE OF THE DAY -->
-    <section id="quote">
-      <h2>Quote of the Day</h2>
-      <p id="quoteText">Loading...</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Deenik</p>
-  </footer>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
