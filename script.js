@@ -60,16 +60,24 @@ async function getNamazTimings(){
         const timingsEl = document.getElementById('timings');
         const now = new Date();
         let nextPrayerName='', nextPrayerTime=null;
-        timingsEl.innerHTML = Object.entries(filteredTimings).map(([name,time])=>{
+
+        // Find next prayer
+        for(let [name,time] of Object.entries(filteredTimings)){
             const [h,m] = time.split(':').map(Number);
             const pTime = new Date(); pTime.setHours(h,m,0,0);
-            if(!nextPrayerTime && pTime>now){nextPrayerTime=pTime; nextPrayerName=name;}
+            if(pTime>now && !nextPrayerTime){ nextPrayerTime=pTime; nextPrayerName=name; }
+        }
+
+        timingsEl.innerHTML = Object.entries(filteredTimings).map(([name,time])=>{
             return `<p class="${name===nextPrayerName?'next-prayer':''}"><strong>${name}</strong>: ${time}</p>`;
         }).join('');
+
+        // Next prayer countdown
         if(nextPrayerTime){
             const timerEl = document.getElementById('next-prayer-timer');
             function updateTimer(){
                 const diff = nextPrayerTime - new Date();
+                if(diff<0){ return; }
                 const hours = Math.floor(diff/(1000*60*60));
                 const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
                 const seconds = Math.floor((diff%(1000*60))/1000);
@@ -86,20 +94,40 @@ const canvas = document.getElementById('qiblaCanvas');
 const ctx = canvas.getContext('2d');
 let qiblaAngle=0;
 
-function drawCompass(angle){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    // outer circle
-    ctx.beginPath(); ctx.arc(150,150,120,0,2*Math.PI); ctx.strokeStyle='#f39f86'; ctx.lineWidth=4; ctx.stroke();
-    // directions N E S W
-    ctx.fillStyle = '#f39f86'; ctx.font='16px Arial';
-    ctx.fillText('N',145,30); ctx.fillText('E',270,155); ctx.fillText('S',145,280); ctx.fillText('W',20,155);
-    // arrow
-    ctx.save(); ctx.translate(150,150); ctx.rotate(angle*Math.PI/180);
-    ctx.beginPath(); ctx.moveTo(0,-100); ctx.lineTo(-12,-80); ctx.lineTo(12,-80); ctx.closePath();
-    ctx.fillStyle='#d95c5c'; ctx.fill(); ctx.restore();
+function drawCompass(angle) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Outer circle
+    ctx.beginPath();
+    ctx.arc(canvas.width/2, canvas.height/2, 120, 0, 2*Math.PI);
+    ctx.strokeStyle = '#f39f86';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    // Cardinal directions
+    ctx.fillStyle = '#f39f86';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('N', canvas.width/2, 30);
+    ctx.fillText('S', canvas.width/2, canvas.height-30);
+    ctx.fillText('E', canvas.width-30, canvas.height/2);
+    ctx.fillText('W', 30, canvas.height/2);
+
+    // Arrow
+    ctx.save();
+    ctx.translate(canvas.width/2, canvas.height/2);
+    ctx.rotate(angle * Math.PI / 180);
+    ctx.beginPath();
+    ctx.moveTo(0,-100);
+    ctx.lineTo(-12,-80);
+    ctx.lineTo(12,-80);
+    ctx.closePath();
+    ctx.fillStyle='#d95c5c';
+    ctx.fill();
+    ctx.restore();
 }
 
-// Calculate Qibla Angle
+// Calculate Qibla angle
 navigator.geolocation.getCurrentPosition(pos=>{
     const lat = pos.coords.latitude*Math.PI/180;
     const lon = pos.coords.longitude*Math.PI/180;
@@ -107,10 +135,11 @@ navigator.geolocation.getCurrentPosition(pos=>{
     const kaabaLon=39.8262*Math.PI/180;
     const angle = Math.atan2(Math.sin(kaabaLon-lon)*Math.cos(kaabaLat),
         Math.cos(lat)*Math.sin(kaabaLat)-Math.sin(lat)*Math.cos(kaabaLat)*Math.cos(kaabaLon-lon));
-    qiblaAngle=angle*180/Math.PI; drawCompass(qiblaAngle);
+    qiblaAngle=angle*180/Math.PI;
+    drawCompass(qiblaAngle);
 });
 
-// Device Orientation
+// Device orientation
 if(window.DeviceOrientationEvent){
     window.addEventListener('deviceorientation', (event)=>{
         const alpha = event.alpha||0;
@@ -123,6 +152,15 @@ const quotes = [
     "Indeed, Allah is with the patient.",
     "Perform prayer at the decline of the sun.",
     "Give charity without delay.",
-    "Remember Allah and you will find peace."
+    "Remember Allah and you will find peace.",
+    "Prayer is the key to Paradise.",
+    "The best charity is that given in Ramadan."
 ];
-document.getElementById('quoteText').textContent = quotes[Math.floor(Math.random()*quotes.length)];
+
+function updateQuote() {
+    const quoteEl = document.getElementById('quoteText');
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    quoteEl.textContent = quotes[randomIndex];
+}
+updateQuote();
+setInterval(updateQuote, 86400000);
